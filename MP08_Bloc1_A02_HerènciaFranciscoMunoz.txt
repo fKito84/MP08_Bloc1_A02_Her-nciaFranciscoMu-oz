@@ -1,0 +1,261 @@
+void main() {
+  // Inicio variables gol,cistella i els jugadors basquet i futbol
+  int gol = 0;
+  int cistella = 0;
+
+  JugadorFutbol? araujo = new JugadorFutbol(
+    "Ronald Araujo",
+    "FC Barcelona",
+    DateTime.utc(2007, DateTime.june, 9),
+    DateTime.utc(1999, DateTime.march, 7),
+    "Uruguai",
+    "Futbol",
+  );
+
+  JugadorBasket? jamesNadji = new JugadorBasket(
+    "James Nadji",
+    "FC Barcelona",
+    DateTime.utc(2025, DateTime.june, 30),
+    DateTime.utc(2004, DateTime.august, 14),
+    "Nigèria",
+    "Futbol",
+  );
+  //Faig imprimir jugador futbol----------
+  print("************Jugador de Futbol***********");
+  print(araujo.toString());
+  gol = araujo.picarFalta(false);
+  araujo.esGolFalta(gol, "araujo.nomJugador");
+  gol = araujo.picarPenal(true);
+  araujo.esGolPenal(gol, "araujo.nomJugador");
+
+  //Faig imprimir jugador basquet---------
+  print("\n\n\n\n\n\n");
+  print("************Jugador de BASQUET***********");
+
+  print(jamesNadji.toString());
+  cistella = jamesNadji.tirarCistellaTirLliure(true);
+  jamesNadji.tipusCistella(cistella, jamesNadji.nomJugador);
+  cistella = jamesNadji.tirarCistellaDeDosPunts(false);
+  jamesNadji.tipusCistella(cistella, jamesNadji.nomJugador);
+  cistella = jamesNadji.tirarCistellaDeTresPunts(true);
+  jamesNadji.tipusCistella(cistella, jamesNadji.nomJugador);
+}
+
+//CLASSES---------------------------
+
+abstract class Esportista {
+  DateTime? dataNeixement;
+  String? nacionalitat;
+  String? nomEsport;
+  //constructor---------
+  Esportista(this.dataNeixement, this.nacionalitat, this.nomEsport);
+  //Geters i Seters---------
+  DateTime? getDataNeixement() {
+    return dataNeixement;
+  }
+
+  void setDataNeixement(DateTime dataNeixement) {
+    this.dataNeixement = dataNeixement;
+  }
+
+  String? getNacionalitat() {
+    return nacionalitat;
+  }
+
+  void setNacionalitat(String nacionalitat) {
+    this.nacionalitat = nacionalitat;
+  }
+
+  String? getNomEsport() {
+    return nomEsport;
+  }
+
+  void setNomEsport(String nomEsport) {
+    this.nomEsport = nomEsport;
+  }
+}
+
+abstract class EsportistaEquip extends Esportista {
+  String? nomJugador;
+  String? nomEquip;
+  DateTime? dataFiContracte;
+  //Constructor
+  EsportistaEquip(
+    this.nomJugador,
+    this.nomEquip,
+    this.dataFiContracte,
+    DateTime? dataNeixement,
+    String? nacionalitat,
+    String? nomEsport,
+  ) : super(dataNeixement, nacionalitat, nomEsport);
+
+  //Geters i Seters
+  String? getNomJugador() {
+    return nomJugador;
+  }
+
+  void setNomJugador(String nomJugador) {
+    this.nomJugador = nomJugador;
+  }
+
+  String? getNomEquip() {
+    return nomEquip;
+  }
+
+  void setNomEquip(String nomEquip) {
+    this.nomEquip = nomEquip;
+  }
+
+  DateTime? getDataFiContracte() {
+    return dataFiContracte;
+  }
+
+  void setDataFiContracte(DateTime dataFiContracte) {
+    this.dataFiContracte = dataFiContracte;
+  }
+}
+
+class JugadorBasket extends EsportistaEquip with Basket {
+  JugadorBasket(
+    String? nomJugador,
+    String? nomEquip,
+    DateTime? dataFiContracte,
+    DateTime? dataNeixement,
+    String? nacionalitat,
+    String? nomEsport,
+  ) : super(
+        nomJugador,
+        nomEquip,
+        dataFiContracte,
+        dataNeixement,
+        nacionalitat,
+        nomEsport,
+      );
+  @override
+  String toString() {
+    return 'Jugador: $nomJugador | Equip:  $nomEquip |' +
+        '\nFicontracte $dataFiContracte  |Data naixement:  $dataNeixement' +
+        ' |\nNacionalitat:  $nacionalitat  |Esport:  $nomEsport  |';
+  }
+}
+
+class JugadorFutbol extends EsportistaEquip with Futbol {
+  JugadorFutbol(
+    String? nomJugador,
+    String? nomEquip,
+    DateTime? dataFiContracte,
+    DateTime? dataNeixement,
+    String? nacionalitat,
+    String? nomEsport,
+  ) : super(
+        nomJugador,
+        nomEquip,
+        dataFiContracte,
+        dataNeixement,
+        nacionalitat,
+        nomEsport,
+      );
+
+  @override
+  String toString() {
+    return 'Jugador: $nomJugador | Equip:  $nomEquip |' +
+        '\nFicontracte $dataFiContracte  |Data naixement:  $dataNeixement' +
+        ' |\nNacionalitat:  $nacionalitat  |Esport:  $nomEsport  |';
+  }
+}
+//Interficie---------------------------------------
+
+mixin Basket {
+  int tirarCistellaTirLliure(bool aEntrat) {
+    int entrat = 0;
+    if (aEntrat != false) {
+      entrat = 1;
+    } else {
+      entrat = 0;
+    }
+
+    return entrat;
+  }
+
+  int tirarCistellaDeDosPunts(bool aEntrat) {
+    int entrat = 0;
+    if (aEntrat != false) {
+      entrat = 2;
+    } else {
+      entrat = 0;
+    }
+
+    return entrat;
+  }
+
+  int tirarCistellaDeTresPunts(bool aEntrat) {
+    int entrat = 0;
+    if (aEntrat != false) {
+      entrat = 3;
+    } else {
+      entrat = 0;
+    }
+
+    return entrat;
+  }
+
+  void tipusCistella(int? cistella, String? jugador) {
+    if (cistella != null && jugador != null && cistella >= 0 && cistella <= 3) {
+      switch (cistella) {
+        case 0:
+          print("\nEl $jugador a fallat la cistella.");
+          break;
+        case 1:
+          print("\nEl $jugador a ficat la cistella de tir lliure 1 punt.");
+          break;
+        case 2:
+          print("\nEl $jugador a ficat la cistella de 2 punts.");
+          break;
+        case 3:
+          print("\nEl $jugador a ficat la cistella de TRIPLE!!!.");
+          break;
+      }
+    } else {
+      print("\nNo hi ha cap cistella.");
+    }
+  }
+}
+mixin Futbol {
+  int picarFalta(bool aEntrat) {
+    int entrat = 0;
+    if (aEntrat != false) {
+      entrat = 1;
+    } else {
+      entrat = 0;
+    }
+
+    return entrat;
+  }
+
+  int picarPenal(bool aEntrat) {
+    int entrat = 0;
+    if (aEntrat != false) {
+      entrat = 1;
+    } else {
+      entrat = 0;
+    }
+
+    return entrat;
+  }
+
+  void esGolFalta(int? gol, String? jugador) {
+    if (gol == 0) {
+      print("\nEl jugador $jugador a fallat el gol de falta");
+    } else if (gol == 1) {
+      print("\nEl jugador $jugador a marcat el gol de falta");
+    }
+  }
+
+  void esGolPenal(int? gol, String? jugador) {
+    if (gol == 0) {
+      print("\El jugador $jugador a fallat el gol de penal");
+    } else if (gol == 1) {
+      print("\nEl jugador $jugador a marcat el gol de penal");
+    }
+  }
+}
